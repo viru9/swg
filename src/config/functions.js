@@ -1,5 +1,4 @@
 import {TOKEN_NAME} from "./config";
-import MiniSearch from 'minisearch';
 
 export const config = () => {
     return ({
