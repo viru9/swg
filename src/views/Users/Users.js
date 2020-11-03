@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getUsersList } from './redux/actions/actionGetUsers';
 import Header from "./../../component/Header/Header";
 import UserTable from "./UserTable";
+import Footer from "./../../component/Footer/Footer";
 
 class Users extends Component {
 
@@ -15,20 +16,15 @@ class Users extends Component {
         this.props.getUsersList();
     }
 
-    renderUserTable = ()=>{
-        const {userList} = this.props;
-        return (
-            <div>getUsers</div>
-        )
-    }
-
     render() {
-        const { roleList } = this.props;
+        const { userList } = this.props;
         return (
             <div>
                 <Header title={"Search Users"} show_search={true}/>
-                <UserTable/>
-                {this.renderUserTable()}
+                <UserTable 
+                cells={['User Name','Assignee Tickets','Submitted Tickets', 'User Organization']}
+                rows={(userList && userList.data) ? userList.data : []}/>
+                <Footer value={2}/>
             </div>
         )
     }
