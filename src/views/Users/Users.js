@@ -4,26 +4,39 @@ import { getUsersList } from './redux/actions/actionGetUsers';
 import Header from "./../../component/Header/Header";
 import UserTable from "./UserTable";
 import Footer from "./../../component/Footer/Footer";
+import {minSearch} from "./../../config/functions";
 
 class Users extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            searchedList:[]
+        };
     }
 
     componentDidMount() {
         this.props.getUsersList();
     }
+    onSearch = (value) =>{
+        const { userList } = this.props;
+        minSearch(userList, value).length > 0 ?
+        this.setState({searchedList: minSearch(userList, value)}) :
+        this.setState({searchedList: []});
+    }
 
     render() {
         const { userList } = this.props;
+        const { searchedList } = this.state;
+        let rowData = searchedList.length > 0 ?
+         searchedList :
+          (userList && userList.data) ? userList.data :[];
         return (
             <div>
-                <Header title={"Search Users"} show_search={true}/>
+                <Header title={"Search Users"} show_search={true} onSearch={this.onSearch}/>
                 <UserTable 
                 cells={['User Name','Assignee Tickets','Submitted Tickets', 'User Organization']}
-                rows={(userList && userList.data) ? userList.data : []}/>
+                rows={rowData ? rowData : []}/>
                 <Footer value={2}/>
             </div>
         )

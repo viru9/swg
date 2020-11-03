@@ -1,4 +1,5 @@
 import {TOKEN_NAME} from "./config";
+import MiniSearch from 'minisearch';
 
 export const config = () => {
     return ({
@@ -8,3 +9,17 @@ export const config = () => {
       }
     });
   }
+
+export const minSearch = (data,search) => {
+  let result = [];
+  if (search && search.length > 1) {
+    data.data.map((value)=>{
+      if(value.name.toLowerCase().indexOf(search)> -1){
+        result.push(value);
+      }
+    })
+    return result;
+  } else {
+      return [];
+  }
+}

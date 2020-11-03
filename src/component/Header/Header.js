@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar(props) {
+function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -96,11 +96,17 @@ export default function PrimarySearchAppBar(props) {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    localStorage.clear();
+    props.history.push('/');
   };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleInputChange = (event) => {
+    props.onSearch(event.target.value);
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -171,6 +177,7 @@ export default function PrimarySearchAppBar(props) {
               input: classes.inputInput,
             }}
             inputProps={{ 'aria-label': 'search' }}
+            onChange={handleInputChange}
           />
         </div>}
           <div className={classes.grow} />
@@ -204,3 +211,5 @@ export default function PrimarySearchAppBar(props) {
     </div>
   );
 }
+const AppWithRouter = withRouter(PrimarySearchAppBar);
+export default AppWithRouter; 

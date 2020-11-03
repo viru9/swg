@@ -4,26 +4,40 @@ import { getTicketsList } from './redux/actions/actionGetTickets';
 import Header from "../../component/Header/Header";
 import TicketTable from "./TicketTable";
 import Footer from "../../component/Footer/Footer";
+import {minSearch} from "./../../config/functions";
 
 class Tickets extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            searchedList:[]
+        };
     }
 
     componentDidMount() {
         this.props.getTicketsList();
     }
 
+    onSearch = (value) =>{
+        const { ticketList } = this.props;
+        minSearch(ticketList, value).length > 0 ?
+        this.setState({searchedList: minSearch(ticketList, value)}) :
+        this.setState({searchedList: []});
+    }
+
     render() {
         const { ticketList } = this.props;
+        const { searchedList } = this.state;
+        let rowData = searchedList.length > 0 ?
+         searchedList :
+          (ticketList && ticketList.data) ? ticketList.data :[];
         return (
             <div>
-                <Header title={"Search Tickets"} show_search={true}/>
+                <Header title={"Search Tickets"} show_search={true} onSearch={this.onSearch}/>
                 <TicketTable 
                 cells={['Ticket Name','Assignee','Submitter', 'Organization']}
-                rows={(ticketList && ticketList.data) ? ticketList.data : []}/>
+                rows={rowData ? rowData : []}/>
                 <Footer value={1}/>
             </div>
         )
