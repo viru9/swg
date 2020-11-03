@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -150,6 +151,8 @@ export default function PrimarySearchAppBar(props) {
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            component={Link}
+            to="/dashboard"
           >
             <MenuIcon />
           </IconButton>

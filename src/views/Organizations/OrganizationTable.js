@@ -125,9 +125,8 @@ export default function CustomPaginationActionsTable(props) {
                <TableCell component="th" scope="row">
                  {row.name}
                </TableCell>
-               <TableCell align="right">{row.assignee_tickets.toString()}</TableCell>
-               <TableCell align="right">{row.submitted_tickets.toString()}</TableCell>
-               <TableCell align="right">{row.user_organization.toString()}</TableCell>
+               <TableCell align="right">{row.tickets.toString()}</TableCell>
+               <TableCell align="right">{row.users.toString()}</TableCell>
              </TableRow>
           ))}
 

@@ -5,6 +5,8 @@ import PublicRoute from './component/Routes/PublicRoute';
 
 import Login from "./component/Login/Login";
 import Dashboard from "./component/Dashboard/Dashboard";
+import Organizations from "./views/Organizations/Organizations";
+import Tickets from './views/Tickets/Tickets';
 import Users from "./views/Users/Users";
 
 import { Router as Router, Route, Switch } from 'react-router-dom';
@@ -19,6 +21,8 @@ function App() {
         <Switch>
           <PrivateRoute path="/dashboard" component={Dashboard}/>
           <PrivateRoute path="/users" component={Users}/>
+          <PrivateRoute path="/organizations" component={Organizations}/>
+          <PrivateRoute path="/tickets" component={Tickets}/>
           <PublicRoute path="/" component={Login}/>
         </Switch>
       </Router >
