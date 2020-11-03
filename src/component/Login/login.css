@@ -1,0 +1,10 @@
+.paper {
+    margin-top: 35%;    
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+}
+
+.avatar {
+    margin-bottom: 5%;
+}
