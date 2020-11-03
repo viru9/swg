@@ -5,10 +5,10 @@ import PublicRoute from './component/Routes/PublicRoute';
 
 import Login from "./component/Login/Login";
 import Dashboard from "./component/Dashboard/Dashboard";
-import Dashboard2 from "./component/Dashboard/Dashboard2";
+import Users from "./views/Users/Users";
 
 import { Router as Router, Route, Switch } from 'react-router-dom';
-import history from './history';
+import history from './helpers/history';
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -18,7 +18,7 @@ function App() {
       <Router history={history}>
         <Switch>
           <PrivateRoute path="/dashboard" component={Dashboard}/>
-          <PrivateRoute path="/dashboard2" component={Dashboard2}/>
+          <PrivateRoute path="/users" component={Users}/>
           <PublicRoute path="/" component={Login}/>
         </Switch>
       </Router >

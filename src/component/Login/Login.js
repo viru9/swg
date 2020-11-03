@@ -1,31 +1,46 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import OAuth2Login from 'react-simple-oauth2-login';
-import {TOKEN_NAME} from "../../config/config"
+import React, { Component } from 'react';
+import {AUTH_URL, CLIENT, LANDING_PAGE, REDIRECT_URL, TOKEN_NAME} from "../../config/config"
+import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
 
-const onSuccess = response => console.log('onSuccess: ',response);
-const onFailure = response => console.error('onFailure 1:', response);
+class Login extends Component {
 
-const AUTH_URL = "https://github.com/login/oauth/authorize";
-const CLIENT = "a66a6dd6ee20066edfcd";
-const REDIRECT_URL = "http://localhost:3000/login";
+    checkUrlContainsParams = (url, field) => {
+        if (url.indexOf('?' + field + '=') != -1)
+            return true;
+        else if (url.indexOf('&' + field + '=') != -1)
+            return true;
+        return false
+    }
 
-const Login = ()=>{
-    return(
-    //     <OAuth2Login
-    // authorizationUrl="https://github.com/login/oauth/authorize"
-    // responseType="token"
-    // clientId="a66a6dd6ee20066edfcd"
-    // redirectUri="http://localhost:3000/login"
-    // onSuccess={onSuccess}
-    // onFailure={onFailure}/>
-    <button onClick={() => {
-        localStorage.setItem(TOKEN_NAME,"tokenId");
-    //    let url = AUTH_URL + '?client_id=' + CLIENT + '&redirect_uri=' + REDIRECT_URL;
-    //     window.location.assign(url);
-        // window.open(url, 'OAuth Login', "height=200,width=200");
-    }}>Login</button>
-    )
+    componentDidMount() {
+
+        let searchContent = this.props.location.search && this.props.location.search
+
+         if (this.checkUrlContainsParams(searchContent, 'code')) {
+            const urlParams = new URLSearchParams(searchContent);
+            const tokenId = urlParams.get('code')
+            localStorage.setItem(TOKEN_NAME,tokenId);
+            this.props.history.push(LANDING_PAGE);
+        }
+       
+    }
+
+    render(){
+        return(
+            <Container maxWidth="sm">
+                <Button onClick={() => {
+                    let url = AUTH_URL + '?client_id=' + CLIENT + '&redirect_uri=' + REDIRECT_URL;
+                    window.location.assign(url);
+                }}
+                  variant="contained" color="primary" >
+                    Login
+                </Button>
+            </Container>
+            
+            )
+    }
+    
 }
 
 export default Login;
